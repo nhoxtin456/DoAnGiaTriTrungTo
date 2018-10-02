@@ -8,7 +8,7 @@ void main()
 	int b;
 	cout << "Hello World" << endl;
 
-	cc
-		kk
+	int c;
+		
 }
 
