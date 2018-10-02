@@ -9,5 +9,6 @@ void main()
 	cout << "Hello World" << endl;
 
 	cc
+		kk
 }
 
