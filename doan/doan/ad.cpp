@@ -9,6 +9,7 @@ void main()
 	cout << "Hello World" << endl;
 
 	int c;
+	int d;
 		
 }
 
