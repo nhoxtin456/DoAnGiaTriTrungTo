@@ -23,7 +23,7 @@ void main()
 	cin >> b;	
 	tinhTong2So(a, b);
 	cout << "Tong cua 2 so la: " << endl;
-	
+	cout << endl;
 }
 
 void tinhTong2So(int a, int b)
