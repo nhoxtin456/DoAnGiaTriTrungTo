@@ -69,6 +69,7 @@ bool Push(STACK &s, NODE *p)
 
 	p->pNext = s.Top;
 	s.Top = p;
+	cout << p;
 	return true;
 }
 
@@ -128,7 +129,7 @@ void XuLy(STACK &s)
 		{
 			continue;						// Bỏ lần lặp hiện tại.
 		}
-		if (str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/' || str[i] == '%')
+		if (str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/' || str[i] == '%' || str[i] =='^')
 		{
 			char *Temp = new char;
 			Temp[0] = str[i];
@@ -192,6 +193,10 @@ void XuLy(STACK &s)
 			else if (p2 == "%")
 			{
 				KetQua = Num3 % Num1;
+			}
+			else if (p2 == "^")
+			{
+				KetQua = Num3 ^ Num1;
 			}
 
 			// Đưa lại nó vào trong Stack.
