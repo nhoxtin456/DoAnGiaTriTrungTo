@@ -1,0 +1,4 @@
+﻿  ad.cpp
+c:\users\dell\documents\github\doangiatritrungto\doan\doan\ad.cpp(160): warning C4552: '-': result of expression not used
+c:\users\dell\documents\github\doangiatritrungto\doan\doan\ad.cpp(216): warning C4326: return type of 'main' should be 'int' instead of 'void'
+  doan.vcxproj -> C:\Users\DELL\Documents\GitHub\DoAnGiaTriTrungTo\doan\x64\Debug\doan.exe

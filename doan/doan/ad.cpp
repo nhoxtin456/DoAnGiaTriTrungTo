@@ -129,7 +129,7 @@ void XuLy(STACK &s)
 		{
 			continue;						// Bỏ lần lặp hiện tại.
 		}
-		if (str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/' || str[i] == '%' || str[i] =='^')
+		if (str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/' || str[i] == '%')
 		{
 			char *Temp = new char;
 			Temp[0] = str[i];
@@ -194,10 +194,12 @@ void XuLy(STACK &s)
 			{
 				KetQua = Num3 % Num1;
 			}
-			else if (p2 == "^")
+			/*else if (p2 == "^")
 			{
-				KetQua = Num3 ^ Num1;
-			}
+				KetQua = 1;
+				for (int i = 1; i <= Num1; i++)
+					KetQua *= Num3;
+			}*/
 
 			// Đưa lại nó vào trong Stack.
 			char chr[20];
@@ -220,3 +222,4 @@ void main()
 	system("pause");
 	
 }
+
