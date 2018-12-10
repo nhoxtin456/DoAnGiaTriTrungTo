@@ -1,31 +1,29 @@
-﻿
-
-// Các thư viện sử dụng trong chương trình
-#include <stdio.h>
-#include <stdlib.h>
-#include <conio.h>
-#include <math.h>
+﻿// Các thư viện sử dụng trong chương trình.
+#include <stack>
 #include <Windows.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <conio.h>
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <math.h>
 #include <cstring>
 using namespace std;
 
 // Khai báo cấu trúc dữ liệu ngăn xếp stack.
 struct Node
 {
-	string Data;				// Dữ liệu chứa bên trong Stack.
-	struct Node *pNext;			// Con trỏ pNext để tạo mối liên kết giữa các Node.
+	string Data;			// Dữ liệu chứa bên trong Stack.
+	struct Node *pNext;		// Con trỏ pNext để tạo mối liên kết giữa các Node.
 };
 typedef struct Node NODE;
 
 struct Stack
 {
-	NODE *Top;					// Top quản lý đầu Stack.
+	NODE *Top;				// Top quản lý đầu Stack.
 };
 typedef struct Stack STACK;
-
 
 // Khởi tạo ngăn xếp.
 void Init(STACK &s)
@@ -34,7 +32,7 @@ void Init(STACK &s)
 }
 
 // Tạo Node trong ngăn xếp Stack.
-NODE *GetNode(string x)			// Dữ liệu bên trong Node đang có kiểu string.
+NODE *GetNode(string x)		// Dữ liệu bên trong Node đang có kiểu string.
 {
 	NODE *p = new NODE;
 	if (p == NULL)
@@ -43,9 +41,9 @@ NODE *GetNode(string x)			// Dữ liệu bên trong Node đang có kiểu string
 		system("pause");
 		return NULL;
 	}
-	p->Data = x;				// Lưu dữ liệu Data vào bên trong Node.
-	p->pNext = NULL;			// Cập nhật lại mối liên kết.
-	return p;					// Trả về Node p.
+	p->Data = x;			// Lưu dữ liệu Data vào bên trong Node.
+	p->pNext = NULL;		// Cập nhật lại mối liên kết.
+	return p;				// Trả về Node p.
 }
 
 // Kiểm tra Stack rỗng. Trả về true nếu Stack có phần tử, ngược lại trả về false.
@@ -63,13 +61,12 @@ bool Push(STACK &s, NODE *p)
 {
 	if (IsEmpty(s) == false)
 	{
-		s.Top = p;				// Cập nhật đầu Stack chính là Node p.
-		return true;
+		s.Top = p;			// Cập nhật đầu Stack chính là Node p.
+		return false;
 	}
 
 	p->pNext = s.Top;
 	s.Top = p;
-	cout << p;
 	return true;
 }
 
@@ -80,7 +77,7 @@ bool Pop(STACK &s, string &x)
 	{
 		return false;
 	}
-	NODE *p = s.Top;			// Con trỏ p trỏ tới con trỏ Top.
+	NODE *p = s.Top;		// Con trỏ p trỏ tới con trỏ Top.
 	x = p->Data;
 	s.Top = s.Top->pNext;
 	delete p;
@@ -98,6 +95,26 @@ bool Top(STACK s, string &x)
 	return true;
 }
 
+// In stack
+void Output(STACK &s, STACK &r)
+{
+	string x;
+	cout << "Noi dung stack: \n";
+	while (IsEmpty(s) == true)
+	{
+		Pop(s, x);
+		cout << x << endl;
+		Node *q = GetNode(x);
+		Push(r, q);
+	}
+	while (IsEmpty(r) == true)
+	{
+		Pop(r, x);
+		Node *q = GetNode(x);
+		Push(s, q);
+	}
+}
+
 // Hàm xử lý.
 void XuLy(STACK &s)
 {
@@ -109,15 +126,20 @@ void XuLy(STACK &s)
 	{
 		cout << "\nKhong tim thay tap tin input.txt";
 		system("pause");
-		return;								// Kết thúc.
+		return; // Kết thúc.
 	}
 
-	string str;								// Biến lưu giá trị đọc từ File vào.
-	getline(FileIn, str);					// Đọc dữ liệu từ file lưu vào biến str.
+	string str;							// Biến lưu giá trị đọc từ File vào.
+	getline(FileIn, str);				// Đọc dữ liệu từ file lưu vào biến str.
+	FileIn.close();						// Đóng file lại.
 
-	FileIn.close();							// Đóng file lại.
-
-	Init(s);								// Khởi tạo Stack.
+	STACK r;
+	Init(r);
+	Init(s);							// Khởi tạo Stack.
+	cout << "Bieu thuc can tinh: ";
+	for (int i = 0; i < str.length(); i++)
+		cout << str[i];
+	cout << endl;
 
 	string p1, p2, p3;
 	int KetQua;
@@ -127,9 +149,9 @@ void XuLy(STACK &s)
 		NODE *p = new NODE;
 		if (str[i] == '(')
 		{
-			continue;						// Bỏ lần lặp hiện tại.
+			continue;				// Bỏ lần lặp hiện tại.
 		}
-		if (str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/' || str[i] == '%')
+		if (str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/' || str[i] == '%' || str[i] == '^')
 		{
 			char *Temp = new char;
 			Temp[0] = str[i];
@@ -162,6 +184,7 @@ void XuLy(STACK &s)
 
 			p = GetNode(Temp);
 			Push(s, p);
+			Output(s, r);
 		}
 
 		if (str[i] == ')')
@@ -194,21 +217,23 @@ void XuLy(STACK &s)
 			{
 				KetQua = Num3 % Num1;
 			}
-			/*else if (p2 == "^")
+			else if (p2 == "^")
 			{
-				KetQua = 1;
-				for (int i = 1; i <= Num1; i++)
-					KetQua *= Num3;
-			}*/
+				int b = 1;
+				for (int j = 1; j <= Num1; j++)
+					b *= Num3;
+				KetQua = b;
+			}
 
 			// Đưa lại nó vào trong Stack.
 			char chr[20];
 			_itoa_s(KetQua, chr, 10);
 			Node *q = GetNode((string)chr);
 			Push(s, q);
+			Output(s, r);
 		}
 	}
-	cout << KetQua;
+	cout << "Ket qua bieu thuc la: " << KetQua;
 }
 
 // Hàm main.
@@ -217,9 +242,8 @@ void main()
 	STACK s;
 	XuLy(s);
 
-	cout << endl;
-	cout << "Thuat toan da xong" << endl;
-	system("pause");
-	
-}
 
+
+	cout << endl;
+	system("pause");
+}
